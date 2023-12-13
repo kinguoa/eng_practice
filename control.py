@@ -109,16 +109,16 @@ class PID_Inc:
 
 
     #pid 设置
-Pid_x = PID_Inc(0.2, 0.0001, 1.8)
-Pid_y = PID_Inc(0.2, 0.0001, 1.8)
-Pid_xv = PID_Inc(0.5, 0.000, 0)
-Pid_yv = PID_Inc(0.5, 0.000, 0)
+Pid_x = PID_Inc(0.09, 0.00, 1.8)
+Pid_y = PID_Inc(0.09, 0.00, 1.8)
+Pid_xv = PID_Inc(0.53, 0.000, 0)
+Pid_yv = PID_Inc(0.53, 0.000, 0)
 cnt =0
 while(flag_dw):
     clock.tick()
     img = sensor.snapshot().lens_corr(1.8)#lens_corr(1.8)畸变矫正
-    img.draw_cross(140,114,size=5, color=(255,255,255))
-    img.draw_circle(140,114,10, color=(255,0,0))
+    #img.draw_cross(140,114,size=5, color=(255,255,255))
+    #img.draw_circle(140,114,10, color=(255,0,0))
 
     blobs = img.find_blobs([green_threshold])
 
@@ -141,12 +141,10 @@ while(flag_dw):
                     x_ev = Pid_x.update(140, blob.cx())  #pid计算
                     y_ev = Pid_y.update(114, blob.cy())  #pid计算
 
-                    #print("cx:\r\n", blob.cx())
-                    #print("cy:\r\n", blob.cx())
                     x_ange = Pid_xv.update(x_ev, block_xv)
                     y_ange = Pid_yv.update(y_ev, block_yv)
-                    #print("y_ange:\r\n",y_ange)
-                    #print("blob.cy():\r\n",blob.cy())
+                    print("x_ev, blob.cx():\r\n", x_ev, blob.cx())
+                    print("y_ev, blob.cy():\r\n", y_ev, blob.cy())
                     Set_Servo_x_angle(6+x_ange)
                     Set_Servo_y_angle(y_ange+4)
                 else:
