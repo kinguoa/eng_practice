@@ -110,10 +110,10 @@ class PID_Inc:
 
 
     #pid 设置
-Pid_x = PID_Inc(0.09, 0.00, 1.8)
-Pid_y = PID_Inc(0.09, 0.00, 1.8)
-Pid_xv = PID_Inc(0.53, 0.000, 0)
-Pid_yv = PID_Inc(0.53, 0.000, 0)
+Pid_x = PID_Inc(0.08, 0.000, 1.8)
+Pid_y = PID_Inc(0.08, 0.000, 1.8)
+Pid_xv = PID_Inc(0.6, 0.00, 0)
+Pid_yv = PID_Inc(0.6, 0.00, 0)
 cnt =0
 while(flag_dw):
     clock.tick()
@@ -138,14 +138,14 @@ while(flag_dw):
                 block_lx = blob.cx()
                 block_ly = blob.cy()
 
-                if abs(300 - blob.cx()) > 20  or abs(300 - blob.cy()) > 20:
+                if abs(140 - blob.cx()) > 0  or abs(114 - blob.cy()) > 0:
                     x_ev = Pid_x.update(140, blob.cx())  #pid计算
                     y_ev = Pid_y.update(114, blob.cy())  #pid计算
 
                     x_ange = Pid_xv.update(x_ev, block_xv)
                     y_ange = Pid_yv.update(y_ev, block_yv)
-                    print("x_ev, blob.cx():\r\n", x_ev, blob.cx())
-                    print("y_ev, blob.cy():\r\n", y_ev, blob.cy())
+                    print("x_ev, block_xv:\r\n", x_ev, block_xv)
+                    print("y_ev, block_yv:\r\n", y_ev, block_yv)
                     Set_Servo_x_angle(6+x_ange)
                     Set_Servo_y_angle(y_ange+4)
                 else:
